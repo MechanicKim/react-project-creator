@@ -1,11 +1,19 @@
 const { execSync } = require('child_process');
 
+const templateTypes = ['babel', 'ts'];
+
 const project = process.argv[2];
+const templateType = process.argv[3];
 
 if (!project) {
-  console.log('프로젝트 이름을 함께 넣어주세요.');
-  console.log('node install.js {프로젝트 이름}');
+  console.log('프로젝트 이름을 넣어주세요.');
+  console.log('node install.js <프로젝트 이름> <템플릿 유형>');
   return;
+}
+
+if (!templateTypes.includes(templateType)) {
+  console.log('템플릿 유형을 넣어주세요.(babel 또는 ts)');
+  console.log('node install.js <프로젝트 이름> <템플릿 유형>');
 }
 
 try {
@@ -23,7 +31,7 @@ try {
   };
 
   execSync(`rm -rf ${project}`);
-  execSync(`cp -r template ${project}`);
+  execSync(`cp -r template/babel ${project}`);
   editPackangeJSON();
   createNvmrc();
 } catch (error) {
