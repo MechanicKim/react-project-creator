@@ -18,20 +18,21 @@ if (!templateTypes.includes(templateType)) {
 
 try {
   const fs = require('fs');
+  const projectRoot = `project/${project}`;
 
   const editPackangeJSON = () => {
-    const packageJSON = require(`./${project}/package.json`);
+    const packageJSON = require(`./${projectRoot}/package.json`);
     packageJSON.name = project;
-    fs.writeFileSync(`./${project}/package.json`, JSON.stringify(packageJSON, null, "\t"));
+    fs.writeFileSync(`./${projectRoot}/package.json`, JSON.stringify(packageJSON, null, "\t"));
   };
 
   const createNvmrc = () => {
     const nodeVersion = execSync(`node -v`).toString();
-    fs.writeFileSync(`./${project}/.nvmrc`, nodeVersion);
+    fs.writeFileSync(`./${projectRoot}/.nvmrc`, nodeVersion);
   };
 
   execSync(`rm -rf ${project}`);
-  execSync(`cp -r template/babel ${project}`);
+  execSync(`cp -r template/babel ${projectRoot}`);
   editPackangeJSON();
   createNvmrc();
 } catch (error) {
