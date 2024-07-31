@@ -20,6 +20,14 @@ try {
   const fs = require('fs');
   const projectRoot = `project/${project}`;
 
+  const ready = () => {
+    execSync(`rm -rf ${project}`);
+    if (!fs.existsSync('project')) {
+      execSync(`mkdir project`);
+    }
+    execSync(`cp -r template/babel ${projectRoot}`);
+  };
+
   const editPackangeJSON = () => {
     const packageJSON = require(`./${projectRoot}/package.json`);
     packageJSON.name = project;
@@ -31,8 +39,7 @@ try {
     fs.writeFileSync(`./${projectRoot}/.nvmrc`, nodeVersion);
   };
 
-  execSync(`rm -rf ${project}`);
-  execSync(`cp -r template/babel ${projectRoot}`);
+  ready();
   editPackangeJSON();
   createNvmrc();
 } catch (error) {
