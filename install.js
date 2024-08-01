@@ -25,7 +25,7 @@ try {
     if (!fs.existsSync('project')) {
       execSync(`mkdir project`);
     }
-    execSync(`cp -r template/babel ${projectRoot}`);
+    execSync(`cp -r template/${templateType} ${projectRoot}`);
   };
 
   const editPackangeJSON = () => {
